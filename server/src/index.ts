@@ -4,6 +4,6 @@ const port = 9000;
 
 const one: number = 1;
 
-app.get('/', (req, res) => res.send('Hello World'));
+app.get('/', (_req, res) => res.send('Hello World'));
 app.listen(port);
 console.log(`[app]: http://localhost:${port}`);
