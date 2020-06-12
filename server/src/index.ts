@@ -1,7 +1,9 @@
-const express = require('express');
+import express from 'express';
 const app = express();
 const port = 9000;
 
-app.get('/', (req, res) => res.send('Hello'));
+const one: number = 1;
+
+app.get('/', (req, res) => res.send('Hello World'));
 app.listen(port);
 console.log(`[app]: http://localhost:${port}`);
