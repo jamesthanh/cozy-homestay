@@ -1,6 +1,7 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { schema } from './graphql';
+import { GraphQLObjectType } from 'graphql';
 
 const app = express();
 const port = 9000;
