@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { render } from 'react-dom';
+import { Listings } from './sections/Listings/Listings';
+
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
+render(
   <React.StrictMode>
-    <App />
+    <Listings title='List of Homestay' />
   </React.StrictMode>,
   document.getElementById('root')
 );
