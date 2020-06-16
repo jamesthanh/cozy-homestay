@@ -1,11 +1,16 @@
 import React from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from 'react-apollo';
+
+import { Avatar, Button, List, Spin, Skeleton, Divider, Alert } from 'antd';
 import { Listings as ListingsData } from './__generated__/Listings';
 import {
   DeleteListing as DeleteListingData,
   DeleteListingVariables,
 } from './__generated__/DeleteListing';
+// import { ListingsSkeleton } from './components/ListingsSkeleton/listingsSkeleton';
+import './styles/Listings.css';
+import Paragraph from 'antd/lib/skeleton/Paragraph';
 // import {
 //   ListingsData,
 //   DeleteListingData,
@@ -53,41 +58,56 @@ export const Listings = ({ title }: Props) => {
   };
 
   const listings = data ? data.listings : null;
+
   const listingsList = listings ? (
-    <ul>
-      {listings.map((listing) => {
-        return (
-          <li key={listing.id}>
-            {listing.title}
-            <button onClick={() => handleDeleteListing(listing.id)}>
-              {' '}
+    <List
+      itemLayout='horizontal'
+      dataSource={listings}
+      renderItem={(listing) => (
+        <List.Item
+          actions={[
+            <Button
+              type='dashed'
+              danger
+              onClick={() => {
+                handleDeleteListing(listing.id);
+              }}
+            >
               Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+            </Button>,
+          ]}
+        >
+          <List.Item.Meta
+            title={listing.title}
+            description={listing.address}
+            avatar={<Avatar src={listing.image} shape='square' size={48} />}
+          />
+        </List.Item>
+      )}
+    />
   ) : null;
 
   if (loading) {
-    return <h2>Loading ...</h2>;
+    return (
+      <div className='listings'>
+        <h2>{title}</h2>
+        <Skeleton active paragraph={{ rows: 1 }} />
+        <Divider />
+        <Skeleton active paragraph={{ rows: 1 }} />
+        <Divider />
+        <Skeleton active paragraph={{ rows: 1 }} />
+      </div>
+    );
   }
-  if (error) {
-    return <h2>Resource not found ...</h2>;
-  }
-  const deleteListingLoadingMessage = deleteListingLoading ? (
-    <h4>Delete in progress...</h4>
-  ) : null;
-  const deleteListingErrorMessage = deleteListingError ? (
-    <h4>Resource not found</h4>
-  ) : null;
 
   return (
-    <div>
-      <h2>{title}</h2>
-      {listingsList}
-      {deleteListingLoadingMessage}
-      {deleteListingErrorMessage}
+    <div className='listings'>
+      <Spin spinning={deleteListingLoading}>
+        <h2>{title}</h2>
+        {listingsList}
+        {/* {deleteListingLoadingMessage} */}
+        {/* {deleteListingErrorMessage} */}
+      </Spin>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { ApolloProvider } from 'react-apollo';
 import { Listings } from './sections/Listings/Listings';
 
 import * as serviceWorker from './serviceWorker';
-
+import './styles/index.css';
 const client = new ApolloClient({
   uri: '/api',
 });
