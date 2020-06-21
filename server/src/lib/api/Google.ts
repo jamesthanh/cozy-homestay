@@ -9,8 +9,8 @@ export const Google = {
   authUrl: auth.generateAuthUrl({
     access_type: 'online',
     scope: [
-      'https://googleapis.com/auth/userinfo.email',
-      'https://googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
     ],
   }),
   logIn: async (code: string) => {
