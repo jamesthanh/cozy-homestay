@@ -35,9 +35,9 @@ export interface Listing {
   bookingsIndex: BookingsIndex;
   price: number;
   numOfGuests: number;
-  numOfBeds: number;
-  numOfBaths: number;
-  rating: number;
+  // numOfBeds: number;
+  // numOfBaths: number;
+  // rating: number;
 }
 
 export interface User {
