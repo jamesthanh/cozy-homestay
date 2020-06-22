@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { Layout, Affix } from 'antd';
+import { ApolloProvider, useMutation } from '@apollo/react-hooks';
+import { Layout, Affix, Spin } from 'antd';
+import { AppHeaderSkeleton, ErrorBanner } from './lib/components';
 import {
   AppHeader,
   Home,
@@ -14,6 +15,11 @@ import {
   NotFound,
   User,
 } from './sections';
+import { LOG_IN } from './lib/graphql/mutations';
+import {
+  LogIn as LogInData,
+  LogInVariables,
+} from './lib/graphql/mutations/LogIn/__generated__/LogIn';
 import { Viewer } from './lib/types';
 import * as serviceWorker from './serviceWorker';
 import './styles/index.css';
@@ -32,10 +38,36 @@ const initialViewer: Viewer = {
 
 const App = () => {
   const [viewer, setViewer] = useState<Viewer>(initialViewer);
+  const [logIn, { error }] = useMutation<LogInData, LogInVariables>(LOG_IN, {
+    onCompleted: (data) => {
+      if (data && data.logIn) {
+        setViewer(data.logIn);
+      }
+    },
+  });
+  const LogInRef = useRef(logIn);
+  useEffect(() => {
+    LogInRef.current();
+  }, []);
+  if (!viewer.didRequest && !error) {
+    return (
+      <Layout className='app-skeleton'>
+        <AppHeaderSkeleton />
+        <div className='app-skeleton__spin-section'>
+          <Spin size='large' tip='Services Starting' />
+        </div>
+      </Layout>
+    );
+  }
+
+  const logInErrorBannerElement = error ? (
+    <ErrorBanner description='Authentication errors, please retry later' />
+  ) : null;
   return (
     <Router>
-      <Layout id='app' className='app__affix-header'>
-        <Affix offsetTop={0}>
+      <Layout id='app'>
+        {logInErrorBannerElement}
+        <Affix offsetTop={0} className='app__affix-header'>
           <AppHeader viewer={viewer} setViewer={setViewer} />
         </Affix>
 
