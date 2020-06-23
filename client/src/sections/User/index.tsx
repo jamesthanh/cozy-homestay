@@ -9,6 +9,7 @@ import {
   UserVariables,
 } from '../../lib/graphql/queries/User/__generated__/User';
 import { Viewer } from '../../lib/types';
+import { PageSkeleton, ErrorBanner } from '../../lib/components';
 
 interface Props {
   viewer: Viewer;
@@ -27,6 +28,23 @@ export const User = ({
       id: match.params.id,
     },
   });
+
+  if (loading) {
+    return (
+      <Content className='user'>
+        <PageSkeleton />
+      </Content>
+    );
+  }
+
+  if (error) {
+    return (
+      <Content className='user'>
+        <ErrorBanner description='Resource not found please try again later' />
+        <PageSkeleton />
+      </Content>
+    );
+  }
 
   const user = data ? data.user : null;
   const viewerIsUser = viewer.id === match.params.id;
