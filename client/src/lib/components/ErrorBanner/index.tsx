@@ -1,5 +1,5 @@
-import React from 'react';
-import { Alert } from 'antd';
+import React from "react";
+import { Alert } from "antd";
 
 interface Props {
   message?: string;
@@ -7,8 +7,8 @@ interface Props {
 }
 
 export const ErrorBanner = ({
-  message = 'Resource not found',
-  description = 'Please try again later',
+  message = "Uh oh! Something went wrong :(",
+  description = "Look like something went wrong. Please check your connection and/or try again later."
 }: Props) => {
   return (
     <Alert
@@ -16,8 +16,8 @@ export const ErrorBanner = ({
       closable
       message={message}
       description={description}
-      type='error'
-      className='error-banner'
+      type="error"
+      className="error-banner"
     />
   );
 };

@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express';
+import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
   type Booking {
@@ -13,11 +13,12 @@ export const typeDefs = gql`
     total: Int!
     result: [Booking!]!
   }
+
   enum ListingType {
     APARTMENT
     HOUSE
-    STUDIO
   }
+
   type Listing {
     id: ID!
     title: String!
@@ -35,8 +36,9 @@ export const typeDefs = gql`
 
   type Listings {
     total: Int!
-    result: [Listings!]!
+    result: [Listing!]!
   }
+
   type User {
     id: ID!
     name: String!
@@ -55,6 +57,7 @@ export const typeDefs = gql`
     hasWallet: Boolean
     didRequest: Boolean!
   }
+
   input LogInInput {
     code: String!
   }
