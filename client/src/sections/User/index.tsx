@@ -30,7 +30,10 @@ export const User = ({
 
   const user = data ? data.user : null;
   const viewerIsUser = viewer.id === match.params.id;
-  const userProfileElement = user ? <UserProfile user={user} /> : null;
+
+  const userProfileElement = user ? (
+    <UserProfile user={user} viewerIsUser={viewerIsUser} />
+  ) : null;
   return (
     <Content className='user'>
       <Row gutter={12} type='flex' justify='space-between'>
